@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "id": "jcsmrx.codex-limits",
+  "name": "Codex Limits",
+  "version": "1.0.0",
+  "author": "Jean Carlos Silva",
+  "license": "MIT",
+  "description": "Compact Codex session and weekly limits for the Omarchy bar.",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Codex Limits",
+    "description": "Shows the remaining Codex allowance and time-to-reset progress without token counts.",
+    "category": "AI",
+    "aliases": [
+      "codex-usage",
+      "codex-rate-limits"
+    ],
+    "allowMultiple": false,
+    "defaultSection": "center",
+    "defaults": {
+      "refreshIntervalSec": 300,
+      "warningThreshold": 20
+    },
+    "schema": [
+      {
+        "key": "refreshIntervalSec",
+        "type": "integer",
+        "label": "Refresh interval (seconds)",
+        "min": 60,
+        "max": 3600,
+        "step": 60,
+        "defaultValue": 300
+      },
+      {
+        "key": "warningThreshold",
+        "type": "integer",
+        "label": "Low allowance warning (%)",
+        "min": 0,
+        "max": 50,
+        "step": 5,
+        "defaultValue": 20
+      }
+    ]
+  }
+}
