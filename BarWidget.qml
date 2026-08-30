@@ -84,6 +84,23 @@ Item {
     return mins + "m"
   }
 
+  function resetCountdownText(entry) {
+    var remainingMs = resetAtMs(entry) - nowMs
+    if (!(remainingMs > 0)) return "0:00"
+    var totalMinutes = Math.max(0, Math.ceil(remainingMs / 60000))
+    var hours = Math.floor(totalMinutes / 60)
+    var minutes = totalMinutes % 60
+    return hours + ":" + (minutes < 10 ? "0" : "") + minutes
+  }
+
+  function meterText(entry) {
+    var label = shortLabel(entry.label)
+    var remaining = remainingPercent(entry)
+    if (label === "5h" && remaining <= 0)
+      return label + " " + resetCountdownText(entry)
+    return label + " " + remaining + "%"
+  }
+
   function tooltipText() {
     var lines = []
     for (var i = 0; i < windows.length; i++) {
@@ -185,8 +202,7 @@ Item {
 
           Text {
             anchors.horizontalCenter: parent.horizontalCenter
-            text: root.shortLabel(meter.modelData.label) + " "
-              + root.remainingPercent(meter.modelData) + "%"
+            text: root.meterText(meter.modelData)
             color: root.remainingPercent(meter.modelData) <= root.warningThreshold
               ? root.urgent : root.foreground
             opacity: root.remainingPercent(meter.modelData) <= root.warningThreshold ? 1 : 0.88
